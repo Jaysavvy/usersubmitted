@@ -1,8 +1,24 @@
 
 import './App.css'
+import { useForm } from "react-hook-form"
+import {DevTool} from '@hookform/devtools'
+
+type FormValues = {
+  firstname: string
+  lastname: string
+  email: string
+  password: string
+}
+
 
 function App() {
 
+  const form = useForm<FormValues>();
+  const {register, control, handleSubmit} = form
+
+  const onSubmit = (data: FormValues) => {
+    console.log('form submitted', data)
+  }
 
   return (
     <>
@@ -26,26 +42,28 @@ function App() {
     <div className="mx-auto max-w-md">
       <div className="divide-y divide-gray-300/50">
         <div className="space-y-6 py-8 text-base leading-7 text-gray-600"></div>
-
+        <form onSubmit={handleSubmit(onSubmit)}>
         <div>
         <label className="block mb-1 text-sm font-medium text-grey" htmlFor="floating_fist-name">First name</label>
-        <input className="  block w-full " type="text" id="first-name" />
+        <input className="block w-full " type="text" id="firstname" {...register("firstname")} />
         </div>
 
         <div>
         <label className=" block mb-1 text-sm font-medium text-grey" htmlFor="floating_last-name">Last name</label>
-        <input className="block w-full" type="last_name" />
+        <input className="block w-full" type="last_name" id="lastname" {...register("lastname")} />
         </div>
 
         <div>
         <label className="block mb-1 text-sm font-medium text-grey" htmlFor="floating_email">Email address</label>
-        <input type="email" />
+        <input type="email" id="email" {...register("email")} />
         </div>
 
         <div>
         <label className="block mb-1 text-sm font-medium text-grey" htmlFor="floating_password">Password</label>
-        <input type="password" />
+        <input type="password" id="password" {...register("password")} />
         </div>
+        </form>
+        <DevTool control={control}/>
 
         <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shawdow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full">Submit Here</button>
 
