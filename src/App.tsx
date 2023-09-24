@@ -16,9 +16,32 @@ function App() {
   const form = useForm<FormValues>();
   const {register, control, handleSubmit} = form
 
-  const onSubmit = (data: FormValues) => {
-    console.log('form submitted', data)
+  const onSubmit = async (data: FormValues) => {
+    const URL = 'https://api.airtable.com/v0/appWUhVvNzx1nudh9/UserSignin'
+    
+    console.log(data)
+    try{ 
+       await fetch(URL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        "Authorization" : "Bearer patDGEfcKB9Nicq1F.96fc82803a08e663ab3a7a436f5fa12b4fd3541d1e886ee095bbd7ba7a84c428", 
+        'Content-Type': 'application/json',
+        "accept": "application/json",
+      },}).catch((response) => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error('Something went wrong')
+          
+        }
+      })
   }
+  catch(error) {
+    console.log(error)
+  }
+  }
+
 
   return (
     <>
@@ -62,6 +85,7 @@ function App() {
         <label className="block mb-1 text-sm font-medium text-grey" htmlFor="floating_password">Password</label>
         <input type="password" id="password" {...register("password")} />
         </div>
+
         <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shawdow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full">Submit Here</button>
         </form>
         <DevTool control={control}/>
