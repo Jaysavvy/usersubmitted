@@ -16,14 +16,14 @@ function App() {
   const form = useForm<FormValues>();
   const {register, control, handleSubmit} = form
 
-  const onSubmit = async (data: FormValues) => {
-    const URL = 'https://api.airtable.com/v0/appWUhVvNzx1nudh9/UserSignin'
+  const onSubmit = async (fields: FormValues) => {
+    const URL = 'https://api.airtable.com/v0/appWUhVvNzx1nudh9/tblyLOXMF87yNM6Na'
     
-    console.log(data)
+    console.log({fields})
     try{ 
        await fetch(URL, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({fields}),
       headers: {
         "Authorization" : "Bearer patDGEfcKB9Nicq1F.96fc82803a08e663ab3a7a436f5fa12b4fd3541d1e886ee095bbd7ba7a84c428", 
         'Content-Type': 'application/json',
